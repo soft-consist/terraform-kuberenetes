@@ -45,3 +45,10 @@ module "eks" {
   allowd_cidr_blocks      = var.allowd_cidr_blocks
   bastion_access_role_arn = data.terraform_remote_state.bastion.outputs.bastion_access_role_arn
 }
+
+module "bastion" {
+  source                         = "git::https://github.com/soft-consist/terraform-modules.git//modules/bastion?ref=v9.0.27"
+  env                            = var.env
+  tags                           = var.tags
+  bastion_assume_role_principals = var.bastion_assume_role_principals
+}
