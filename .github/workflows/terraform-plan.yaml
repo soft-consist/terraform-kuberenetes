@@ -49,7 +49,7 @@ jobs:
 
   eks:
     runs-on: ubuntu-latest
-    depends-on: vpc
+    needs: vpc
     steps:
       - uses: actions/checkout@v4
 
