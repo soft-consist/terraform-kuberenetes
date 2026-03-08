@@ -87,7 +87,7 @@ jobs:
 
   eks:
     runs-on: ubuntu-latest
-    needs:  vpc
+    needs:  bastion
     steps:
       - uses: actions/checkout@v4
 
