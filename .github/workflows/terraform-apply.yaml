@@ -1,7 +1,7 @@
-name: Terraform Plan (PR)
+name: Terraform Apply (Main)
 
 on:
-  pull_request:
+  push:
     branches: [main]
 
 permissions:
@@ -34,9 +34,9 @@ jobs:
         working-directory: terraform-repo/prod/ap-northeast-2/shared_eks/vpc
         run: terraform validate
 
-      - name: Terraform Plan
+      - name: Terraform Apply
         working-directory: terraform-repo/prod/ap-northeast-2/shared_eks/vpc
-        run: terraform plan -var-file=prod.tfvars -no-color | tee plan.txt
+        run: terraform apply -var-file=prod.tfvars -auto-approve
 
       - name: Notify PR (PROD)
         run: node scripts/terraform-notifier.js
