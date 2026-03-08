@@ -20,6 +20,9 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::358871393576:role/github-actions-terraform-role
           aws-region: ap-northeast-2
+          audience: sts.amazonaws.com
+          output-env-credentials: true
+
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
