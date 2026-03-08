@@ -37,10 +37,10 @@ jobs:
       - name: Terraform Apply
         working-directory: terraform-repo/prod/ap-northeast-2/shared_eks/vpc
         run: terraform apply -var-file=prod.tfvars -auto-approve
-  
+
   eks:
-    depends-on: vpc
     runs-on: ubuntu-latest
+    needs: vpc
     steps:
       - uses: actions/checkout@v4
 
@@ -56,13 +56,13 @@ jobs:
           terraform_version: 1.6.6
 
       - name: Terraform Init
-        working-directory: terraform-repo/prod/ap-northeast-2/shared_eks/vpc
+        working-directory: terraform-repo/prod/ap-northeast-2/shared_eks/01/eks
         run: terraform init -input=false
 
       - name: Terraform Validate
-        working-directory: terraform-repo/prod/ap-northeast-2/shared_eks/vpc
+        working-directory: terraform-repo/prod/ap-northeast-2/shared_eks/01/eks 
         run: terraform validate
 
       - name: Terraform Apply
-        working-directory: terraform-repo/prod/ap-northeast-2/shared_eks/vpc
-        run: terraform apply -var-file=prod.tfvars -auto-approve  
+        working-directory: terraform-repo/prod/ap-northeast-2/shared_eks/01/eks
+        run: terraform apply -var-file=prod.tfvars -auto-approve
