@@ -22,15 +22,3 @@ module "vpc" {
   private_subnets = var.private_subnets
   azs             = var.azs
 }
-
-output "aws_vpc" {
-  value = module.vpc.aws_vpc
-}
-
-output "public_subnet_ids" {
-  value = module.vpc.public_subnet_ids
-}
-
-output "private_subnet_ids" {
-  value = module.vpc.private_subnet_ids
-}
