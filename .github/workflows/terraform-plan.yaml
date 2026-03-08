@@ -27,15 +27,15 @@ jobs:
           terraform_version: 1.6.6
 
       - name: Terraform Init
-        working-directory: terrraform-repo/prod/ap-northeast-2/shared_eks/vpc
+        working-directory: terraform-repo/prod/ap-northeast-2/shared_eks/vpc
         run: terraform init -input=false
 
       - name: Terraform Validate
-        working-directory: terrraform-repo/prod/ap-northeast-2/shared_eks/vpc
+        working-directory: terraform-repo/prod/ap-northeast-2/shared_eks/vpc
         run: terraform validate
 
       - name: Terraform Plan
-        working-directory: terrraform-repo/prod/ap-northeast-2/shared_eks/vpc
+        working-directory: terraform-repo/prod/ap-northeast-2/shared_eks/vpc
         run: terraform plan -var-file=prod.tfvars -no-color | tee plan.txt
 
       - name: Notify PR (PROD)
@@ -45,4 +45,4 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
           TF_ENV: prod
-          PLAN_PATH: terrraform-repo/prod/ap-northeast-2/shared_eks/vpc/plan.txt
+          PLAN_PATH: terraform-repo/prod/ap-northeast-2/shared_eks/vpc/plan.txt
