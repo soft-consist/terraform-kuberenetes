@@ -59,3 +59,13 @@ variable "region" {
   description = "AWS region"
   type        = string
 }
+
+variable "env" {
+  description = "Environment name"
+  type        = string
+}
+
+variable "tags" {
+  description = "Tags to apply to the VPC"
+  type        = map(string)
+}

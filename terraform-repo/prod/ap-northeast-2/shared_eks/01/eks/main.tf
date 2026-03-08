@@ -27,3 +27,15 @@ module "eks" {
   allowd_cidr_blocks      = var.allowd_cidr_blocks
   bastion_access_role_arn = module.bastion.bastion_access_role_arn
 }
+
+output "aws_vpc" {
+  value = module.vpc.aws_vpc
+}
+
+output "public_subnet_ids" {
+   value = module.vpc.public_subnet_ids
+ }
+
+output "bastion_access_role_arn" {
+   value = module.bastion.bastion_access_role_arn
+ }
