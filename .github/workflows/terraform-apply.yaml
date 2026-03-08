@@ -37,12 +37,3 @@ jobs:
       - name: Terraform Apply
         working-directory: terraform-repo/prod/ap-northeast-2/shared_eks/vpc
         run: terraform apply -var-file=prod.tfvars -auto-approve
-
-      - name: Notify PR (PROD)
-        run: node scripts/terraform-notifier.js
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-          TF_ENV: prod
-          PLAN_PATH: terraform-repo/prod/ap-northeast-2/shared_eks/vpc/plan.txt
