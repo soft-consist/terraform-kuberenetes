@@ -12,9 +12,15 @@ provider "aws" {
   region = var.region
 }
 
-module "vpc" {
-  source          = "git::https://github.com/soft-consist/terraform-modules.git//modules/vpc?ref=v9.0.27"
+data "terraform_remote_state" "vpc" {
+  backend = "s3"
+  config = {
+    bucket = "my-terraform-state-ashu-abc-xyz"
+    key    = "prod-vpc.tfstate"
+    region = "ap-northeast-2"
+  }
 }
+
 
 module "eks" {
   source                  = "git::https://github.com/soft-consist/terraform-modules.git//modules/eks?ref=v9.0.27"

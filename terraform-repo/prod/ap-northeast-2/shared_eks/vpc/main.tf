@@ -26,3 +26,7 @@ module "vpc" {
 output "aws_vpc" {
   value = module.vpc.aws_vpc
 }
+
+output "public_subnet_ids" {
+  value = module.vpc.public_subnet_ids
+}
