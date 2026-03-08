@@ -47,9 +47,46 @@ jobs:
           TF_ENV: prod
           PLAN_PATH: terraform-repo/prod/ap-northeast-2/shared_eks/vpc/plan.txt
 
+  bastion:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN_PROD }}
+          aws-region: ap-northeast-2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.6
+
+      - name: Terraform Init
+        working-directory: terraform-repo/prod/ap-northeast-2/shared_eks/bastion
+        run: terraform init -input=false
+
+      - name: Terraform Validate
+        working-directory: terraform-repo/prod/ap-northeast-2/shared_eks/bastion
+        run: terraform validate
+
+      - name: Terraform Plan
+        working-directory: terraform-repo/prod/ap-northeast-2/shared_eks/bastion
+        run: terraform plan -var-file=prod.tfvars -no-color | tee plan.txt
+
+      - name: Notify PR (PROD)
+        run: node scripts/terraform-notifier.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          TF_ENV: prod
+          PLAN_PATH: terraform-repo/prod/ap-northeast-2/shared_eks/bastion/plan.txt
+
   eks:
     runs-on: ubuntu-latest
-    needs: vpc
+    needs:  vpc
     steps:
       - uses: actions/checkout@v4
 
