@@ -49,6 +49,7 @@ jobs:
 
   bastion:
     runs-on: ubuntu-latest
+    needs: vpc
     steps:
       - uses: actions/checkout@v4
 
