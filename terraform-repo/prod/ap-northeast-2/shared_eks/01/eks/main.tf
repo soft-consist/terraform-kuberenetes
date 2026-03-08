@@ -16,19 +16,19 @@ data "terraform_remote_state" "vpc" {
   backend = "s3"
   config = {
     bucket = "my-terraform-state-ashu-abc-xyz"
-    key    = "prod-vpc.tfstate"   # must match the VPC backend key
+    key    = "prod-terraform.tfstate"   # must match the VPC backend key
     region = "ap-northeast-2"
   }
 }
 
-data "terraform_remote_state" "bastion" {
-  backend = "s3"
-  config = {
-    bucket = "my-terraform-state-ashu-abc-xyz"
-    key    = "prod-bastion.tfstate"   # if you have a bastion module separately
-    region = "ap-northeast-2"
-  }
-}
+# data "terraform_remote_state" "bastion" {
+#   backend = "s3"
+#   config = {
+#     bucket = "my-terraform-state-ashu-abc-xyz"
+#     key    = "prod-bastion.tfstate"   # if you have a bastion module separately
+#     region = "ap-northeast-2"
+#   }
+# }
 
 module "eks" {
   source                  = "git::https://github.com/soft-consist/terraform-modules.git//modules/eks?ref=v9.0.27"
@@ -43,5 +43,5 @@ module "eks" {
   min_size                = var.min_size
   node_instance_types     = var.node_instance_types
   allowd_cidr_blocks      = var.allowd_cidr_blocks
-  bastion_access_role_arn = data.terraform_remote_state.bastion.outputs.bastion_access_role_arn
+#   bastion_access_role_arn = data.terraform_remote_state.bastion.outputs.bastion_access_role_arn
 }
