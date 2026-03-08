@@ -69,3 +69,9 @@ variable "tags" {
   description = "Tags to apply to the VPC"
   type        = map(string)
 }
+
+variable "bastion_assume_role_principals" {
+  description = "List of IAM principals allowed to assume the bastion role"
+  type        = list(string)
+  default     = []
+}
