@@ -18,11 +18,8 @@ jobs:
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::358871393576:role/github-actions-terraform-role
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN_PROD }}
           aws-region: ap-northeast-2
-          audience: sts.amazonaws.com
-          output-env-credentials: true
-
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
@@ -30,7 +27,7 @@ jobs:
           terraform_version: 1.6.6
 
       - name: Terraform Init
-        working-directory: envs/prod
+        working-directory: terrraform/prod/ap-northeast-2/shared_eks/vpc
         run: terraform init -input=false
 
       - name: Terraform Validate
